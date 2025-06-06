@@ -5,6 +5,77 @@
 @section('page-main-title', 'Product => List Products')
 
 @section('content')
+<style>
+        /* Ensure the content wrapper takes full viewport height */
+        .content-wrapper {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Make the table container take available space */
+        .table-container {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Style the table */
+        .table-responsive {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        /* Fixed thead */
+        .table thead {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        /* Scrollable tbody */
+        .table tbody {
+            display: block;
+            overflow-y: auto;
+            height: 600px;
+            max-height: calc(100vh - 200px); /* Adjust based on header/pagination height */
+        }
+
+        /* Ensure table rows and cells behave correctly */
+        .table tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .table thead, .table tbody tr {
+            display: table;
+            width: 100%;
+        }
+
+        /* Pagination styling */
+        .pagination-container {
+            padding: 1rem;
+            background: #fff;
+        }
+        /* Color preview */
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    </style>
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
@@ -22,6 +93,7 @@
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>Author</th>
+                                <th>Description</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -36,9 +108,14 @@
                                     <td><strong>{{ $product->name }}</strong></td>
                                     <td>${{ number_format($product->regular_price, 2) }}</td>
                                     <td>${{ number_format($product->discount, 2) }}</td>
-                                    <td><span class="badge bg-label-success me-1">{{ $product->category ? $product->category->name : 'N/A' }}</span></td>
-                                    <td><span class="badge bg-label-info me-1">{{ $product->brand ? $product->brand->name : 'N/A' }}</span></td>
-                                    <td><span class="badge bg-label-warning me-1">{{ $product->user ? $product->user->name : 'N/A' }}</span></td>
+                                    <td>
+                                        <span class="badge bg-label-success me-1">
+                                           {{ $product->category ? $product->category->name : ''}}
+                                        </span>
+                                    </td>
+                                    <td><span class="badge bg-label-info me-1">{{ $product->brand ? $product->brand->name : '' }}</span></td>
+                                    <td><span class="badge bg-label-warning me-1">{{ $product->user ? $product->user->name : '' }}</span></td>
+                                    <td><span class="badge bg-label-info me-1">{{ $product->description ?? '' }}</span></td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

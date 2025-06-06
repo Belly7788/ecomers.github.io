@@ -39,9 +39,9 @@
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="category" class="form-label">Category</label>
-                                    <select name="category" class="form-control">
+                                    <select name="category_id" class="form-control">
                                         @foreach ($categories as $catVal)
-                                            <option value="{{ $catVal->id }}" {{ old('category') == $catVal->id ? 'selected' : '' }}>{{ $catVal->name }}</option>
+                                            <option value="{{ $catVal->id }}" {{ old('category_id') == $catVal->id ? 'selected' : '' }}>{{ $catVal->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -57,6 +57,26 @@
                                 <div class="mb-3 col-6">
                                     <label for="thumbnail" class="form-label text-danger">Thumbnail (Recommended size: 800x800 pixels)</label>
                                     <input class="form-control" type="file" name="thumbnail" />
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="color_id" class="form-label">Colors</label>
+                                    <select name="color_id[]" class="form-control" multiple>
+                                        @foreach ($colors as $color)
+                                            <option value="{{ $color->id }}" {{ in_array($color->id, old('color_id', [])) ? 'selected' : '' }}>{{ $color->color_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="size_id" class="form-label">Sizes</label>
+                                    <select name="size_id[]" class="form-control" multiple>
+                                        @foreach ($sizes as $size)
+                                            <option value="{{ $size->id }}" {{ in_array($size->id, old('size_id', [])) ? 'selected' : '' }}>{{ $size->name_size }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="stock" class="form-label">Stock</label>
+                                    <input class="form-control" type="number" name="stock" value="{{ old('stock') }}" min="0" />
                                 </div>
                                 <div class="mb-3 col-12">
                                     <label for="description" class="form-label">Description</label>

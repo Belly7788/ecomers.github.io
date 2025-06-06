@@ -15,11 +15,17 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/signup-submit', [AuthController::class, 'register'])->name('signup.submit');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::post('/admin/signout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/', function () {
     return view('Pages.Dashboard.dashboard');
 })->middleware('auth')->name('dashboard');
 
+Route::get('/home', [ProductController::class, 'getFrontEndProducts'])->name('home');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.detail');
+Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
+Route::get('/news', [ProductController::class, 'getNewsProducts'])->name('news');
+Route::get('/search', [ProductController::class, 'search'])->name('search');
 
 
 Route::middleware('auth')->group(function () {
